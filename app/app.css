@@ -54,6 +54,17 @@ body {
     background-color: white;
     padding: 8px;
   }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .todo-item button {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
   
   li:hover {
     background: #dadbf9;

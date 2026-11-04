@@ -41,7 +41,7 @@ export default function App() {
       <button onClick={createTodo}>+ new</button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id} onClick={() => deleteTodo(todo.id
+          <li key={todo.id} onClick={() => deleteTodo(todo.id)}>
             {todo.content}
           </li>
         ))}

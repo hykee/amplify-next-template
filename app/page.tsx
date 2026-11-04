@@ -24,8 +24,48 @@ export default function App() {
   }
 
   useEffect(() => {
-    listTodos();
-  }, []);
+    const subscription = client.models.Todo.observeQuery().subscribe({
+    next: (data) => setTodos([...data.items]),
+    error: (error) => {
+      console.error("Todo 목록을 불러오지 못했습니다:", error);
+    },
+  });
+
+  return () => subscription.unsubscribe();
+}, []);
+
+async function createTodo() {
+  const content = window.prompt("Todo content");
+
+  // 취소했거나 공백만 입력한 경우 생성하지 않습니다.
+  if (content === null || !content.trim()) return;
+
+  try {
+    const { errors } = await client.models.Todo.create({
+      content: content.trim(),
+    });
+
+    if (errors?.length) {
+      throw new Error(errors.map((error) => error.message).join(", "));
+    }
+  } catch (error) {
+    console.error("Todo 생성 실패:", error);
+    window.alert("Todo를 만들지 못했습니다.");
+  }
+}
+
+async function deleteTodo(id: string) {
+  try {
+    const { errors } = await client.models.Todo.delete({ id });
+
+    if (errors?.length) {
+      throw new Error(errors.map((error) => error.message).join(", "));
+    }
+  } catch (error) {
+    console.error("Todo 삭제 실패:", error);
+    window.alert("Todo를 삭제하지 못했습니다.");
+  }
+  }
 
   function createTodo() {
     client.models.Todo.create({

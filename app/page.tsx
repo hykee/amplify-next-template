@@ -43,12 +43,9 @@ export default function App() {
         {todos.map((todo) => (
           <li key={todo.id}>
             <span>{todo.content}</span>
-            <button
-      type="button"
-      onClick={() => deleteTodo(todo.id)}
-    >
-      삭제
-    </button>
+            <button type="button" onClick={() => deleteTodo(todo.id)}>
+               삭제
+           </button>
             {todo.content}
           </li>
         ))}
